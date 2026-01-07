@@ -2,12 +2,9 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useQuery } from '@tanstack/react-query';
-import { memo, useMemo, useState } from 'react';
+import { memo, useState } from 'react';
 import { signOut, useSession } from 'next-auth/react';
 import { cn } from '@/lib/utils';
-import { api, Invitation } from '@/lib/api';
-import { useApiAuth } from '@/hooks/useApi';
 import {
   LayoutDashboard,
   FolderKanban,
@@ -19,8 +16,6 @@ import {
   Target,
   Terminal,
   BookOpen,
-  Building2,
-  Mail,
   Store,
   LogOut,
   ChevronUp,
@@ -39,10 +34,6 @@ const navigation = [
   { name: 'Marketplace', href: '/dashboard/marketplace', icon: Store },
 ];
 
-const teamNavigation = [
-  { name: 'Organizations', href: '/dashboard/organizations', icon: Building2 },
-];
-
 const secondaryNavigation = [
   { name: 'Guide', href: '/dashboard/guide', icon: BookOpen },
   { name: 'Settings', href: '/dashboard/settings', icon: Settings },
@@ -50,25 +41,9 @@ const secondaryNavigation = [
 
 export const Sidebar = memo(function Sidebar() {
   const pathname = usePathname();
-  const { isReady } = useApiAuth();
   const { data: session } = useSession();
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
-
-  // Fetch pending invitations count with longer cache - only when authenticated
-  const { data: invitationsData } = useQuery({
-    queryKey: ['my-invitations'],
-    queryFn: () => api.listMyInvitations(),
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    enabled: isReady, // Only run when authenticated
-  });
-
-  // Memoize pending count calculation
-  const pendingInvitationsCount = useMemo(() => {
-    return invitationsData?.items?.filter(
-      (inv: Invitation) => inv.status === 'pending'
-    ).length || 0;
-  }, [invitationsData]);
 
   const handleLogout = async () => {
     setIsLoggingOut(true);
@@ -140,50 +115,6 @@ export const Sidebar = memo(function Sidebar() {
             </Link>
           );
         })}
-
-        {/* Team Section */}
-        <div className="px-2 py-1.5 mt-4">
-          <span className="text-[10px] font-mono text-white/30 uppercase tracking-wider">Team</span>
-        </div>
-        {teamNavigation.map((item) => {
-          const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
-          return (
-            <Link
-              key={item.name}
-              href={item.href}
-              className={cn(
-                'flex items-center gap-2 px-2 py-1.5 text-xs font-mono transition-all duration-150',
-                isActive
-                  ? 'bg-white text-black'
-                  : 'text-white/60 hover:text-white hover:bg-white/5'
-              )}
-            >
-              <item.icon className="w-3.5 h-3.5" />
-              <span>{item.name}</span>
-              {isActive && (
-                <span className="ml-auto text-[10px]">_</span>
-              )}
-            </Link>
-          );
-        })}
-        {/* Invitations Link with Badge */}
-        <Link
-          href="/dashboard/invitations"
-          className={cn(
-            'flex items-center gap-2 px-2 py-1.5 text-xs font-mono transition-all duration-150',
-            pathname === '/dashboard/invitations'
-              ? 'bg-white text-black'
-              : 'text-white/60 hover:text-white hover:bg-white/5'
-          )}
-        >
-          <Mail className="w-3.5 h-3.5" />
-          <span>Invitations</span>
-          {pendingInvitationsCount > 0 && (
-            <span className="ml-auto bg-white text-black text-[10px] font-bold px-1.5 py-0.5 min-w-[18px] text-center">
-              {pendingInvitationsCount}
-            </span>
-          )}
-        </Link>
       </nav>
 
       {/* Secondary Navigation */}

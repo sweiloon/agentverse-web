@@ -389,7 +389,7 @@ class ApiClient {
     if (params?.search) searchParams.set('search', params.search);
 
     const query = searchParams.toString();
-    return this.request<Project[]>(`/api/v1/projects/${query ? `?${query}` : ''}`);
+    return this.request<Project[]>(`/api/v1/projects${query ? `?${query}` : ''}`);
   }
 
   async createProject(data: ProjectCreate): Promise<Project> {
@@ -443,7 +443,7 @@ class ApiClient {
     if (params?.scenario_type) searchParams.set('scenario_type', params.scenario_type);
 
     const query = searchParams.toString();
-    return this.request<Scenario[]>(`/api/v1/scenarios/${query ? `?${query}` : ''}`);
+    return this.request<Scenario[]>(`/api/v1/scenarios${query ? `?${query}` : ''}`);
   }
 
   async createScenario(data: ScenarioCreate): Promise<Scenario> {
@@ -505,7 +505,7 @@ class ApiClient {
     if (params?.limit) searchParams.set('limit', String(params.limit));
 
     const query = searchParams.toString();
-    return this.request<SimulationRun[]>(`/api/v1/simulations/${query ? `?${query}` : ''}`);
+    return this.request<SimulationRun[]>(`/api/v1/simulations${query ? `?${query}` : ''}`);
   }
 
   async createSimulation(data: SimulationRunCreate): Promise<SimulationRun> {
@@ -620,7 +620,7 @@ class ApiClient {
     if (params?.source_type) searchParams.set('source_type', params.source_type);
 
     const query = searchParams.toString();
-    return this.request<DataSource[]>(`/api/v1/data-sources/${query ? `?${query}` : ''}`);
+    return this.request<DataSource[]>(`/api/v1/data-sources${query ? `?${query}` : ''}`);
   }
 
   async getDataSource(dataSourceId: string): Promise<DataSource> {
@@ -917,7 +917,7 @@ class ApiClient {
     if (params?.limit) searchParams.set('limit', String(params.limit));
 
     const query = searchParams.toString();
-    return this.request<Product[]>(`/api/v1/products/${query ? `?${query}` : ''}`);
+    return this.request<Product[]>(`/api/v1/products${query ? `?${query}` : ''}`);
   }
 
   async createProduct(data: ProductCreate): Promise<Product> {
@@ -1200,141 +1200,6 @@ class ApiClient {
     return `${this.baseUrl}/api/v1/focus-groups/sessions/${sessionId}/interview/stream`;
   }
 
-  // ========== Organization Endpoints ==========
-
-  async listMyOrganizations(): Promise<{ items: UserOrganization[] }> {
-    return this.request<{ items: UserOrganization[] }>('/api/v1/organizations/');
-  }
-
-  async createOrganization(data: OrganizationCreate): Promise<Organization> {
-    return this.request<Organization>('/api/v1/organizations/', {
-      method: 'POST',
-      body: JSON.stringify(data),
-    });
-  }
-
-  async getOrganization(orgSlug: string): Promise<OrganizationDetail> {
-    return this.request<OrganizationDetail>(`/api/v1/organizations/${orgSlug}`);
-  }
-
-  async updateOrganization(orgSlug: string, data: OrganizationUpdate): Promise<Organization> {
-    return this.request<Organization>(`/api/v1/organizations/${orgSlug}`, {
-      method: 'PUT',
-      body: JSON.stringify(data),
-    });
-  }
-
-  async deleteOrganization(orgSlug: string): Promise<{ message: string }> {
-    return this.request<{ message: string }>(`/api/v1/organizations/${orgSlug}`, {
-      method: 'DELETE',
-    });
-  }
-
-  async getOrganizationMembers(orgSlug: string): Promise<MemberInfo[]> {
-    return this.request<MemberInfo[]>(`/api/v1/organizations/${orgSlug}/members`);
-  }
-
-  async updateMemberRole(orgSlug: string, userId: string, role: string): Promise<MemberInfo> {
-    return this.request<MemberInfo>(`/api/v1/organizations/${orgSlug}/members/${userId}`, {
-      method: 'PUT',
-      body: JSON.stringify({ role }),
-    });
-  }
-
-  async removeMember(orgSlug: string, userId: string): Promise<{ message: string }> {
-    return this.request<{ message: string }>(`/api/v1/organizations/${orgSlug}/members/${userId}`, {
-      method: 'DELETE',
-    });
-  }
-
-  async listOrganizationInvitations(orgSlug: string, status?: string): Promise<{ items: Invitation[]; total: number }> {
-    const query = status ? `?status=${status}` : '';
-    return this.request<{ items: Invitation[]; total: number }>(`/api/v1/organizations/${orgSlug}/invitations${query}`);
-  }
-
-  async createInvitation(orgSlug: string, data: InvitationCreate): Promise<Invitation> {
-    return this.request<Invitation>(`/api/v1/organizations/${orgSlug}/invitations`, {
-      method: 'POST',
-      body: JSON.stringify(data),
-    });
-  }
-
-  async cancelInvitation(orgSlug: string, invitationId: string): Promise<{ message: string }> {
-    return this.request<{ message: string }>(`/api/v1/organizations/${orgSlug}/invitations/${invitationId}`, {
-      method: 'DELETE',
-    });
-  }
-
-  async getOrganizationAuditLogs(
-    orgSlug: string,
-    params?: {
-      action?: string;
-      user_id?: string;
-      page?: number;
-      page_size?: number;
-    }
-  ): Promise<{ items: AuditLog[]; total: number; page: number; page_size: number }> {
-    const searchParams = new URLSearchParams();
-    if (params?.action) searchParams.set('action', params.action);
-    if (params?.user_id) searchParams.set('user_id', params.user_id);
-    if (params?.page) searchParams.set('page', String(params.page));
-    if (params?.page_size) searchParams.set('page_size', String(params.page_size));
-
-    const query = searchParams.toString();
-    return this.request(`/api/v1/organizations/${orgSlug}/audit-logs${query ? `?${query}` : ''}`);
-  }
-
-  async getOrganizationStats(orgSlug: string): Promise<OrganizationStats> {
-    return this.request<OrganizationStats>(`/api/v1/organizations/${orgSlug}/stats`);
-  }
-
-  async getOrganizationDashboard(orgSlug: string): Promise<OrganizationDashboard> {
-    return this.request<OrganizationDashboard>(`/api/v1/organizations/${orgSlug}/dashboard`);
-  }
-
-  // ========== Invitation Endpoints (User-facing) ==========
-
-  async listPendingInvitations(): Promise<{ items: Invitation[]; total: number }> {
-    return this.request<{ items: Invitation[]; total: number }>('/api/v1/invitations/pending');
-  }
-
-  async acceptInvitation(invitationId: string): Promise<{ message: string }> {
-    return this.request<{ message: string }>(`/api/v1/invitations/${invitationId}/accept`, {
-      method: 'POST',
-    });
-  }
-
-  async declineInvitation(invitationId: string): Promise<{ message: string }> {
-    return this.request<{ message: string }>(`/api/v1/invitations/${invitationId}/decline`, {
-      method: 'POST',
-    });
-  }
-
-  async getInvitationByToken(token: string): Promise<Invitation> {
-    return this.request<Invitation>(`/api/v1/invitations/by-token/${token}`);
-  }
-
-  async acceptInvitationByToken(token: string): Promise<{ message: string }> {
-    return this.request<{ message: string }>(`/api/v1/invitations/by-token/${token}/accept`, {
-      method: 'POST',
-    });
-  }
-
-  // Alias for sidebar - list all invitations (pending by default)
-  async listMyInvitations(): Promise<{ items: Invitation[]; total: number }> {
-    return this.listPendingInvitations();
-  }
-
-  // Alias for organization members page
-  async inviteToOrganization(orgSlug: string, data: InvitationCreate): Promise<Invitation> {
-    return this.createInvitation(orgSlug, data);
-  }
-
-  // Alias for getOrganizationInvitations
-  async getOrganizationInvitations(orgSlug: string, status?: string): Promise<{ items: Invitation[]; total: number }> {
-    return this.listOrganizationInvitations(orgSlug, status);
-  }
-
   // ========== Marketplace Endpoints ==========
 
   async listMarketplaceCategories(includeInactive?: boolean): Promise<MarketplaceCategory[]> {
@@ -1367,7 +1232,6 @@ class ApiClient {
     scenario_type?: string;
     tags?: string;
     author_id?: string;
-    organization_id?: string;
     is_featured?: boolean;
     is_verified?: boolean;
     is_premium?: boolean;
@@ -1384,7 +1248,6 @@ class ApiClient {
     if (params?.scenario_type) searchParams.set('scenario_type', params.scenario_type);
     if (params?.tags) searchParams.set('tags', params.tags);
     if (params?.author_id) searchParams.set('author_id', params.author_id);
-    if (params?.organization_id) searchParams.set('organization_id', params.organization_id);
     if (params?.is_featured !== undefined) searchParams.set('is_featured', String(params.is_featured));
     if (params?.is_verified !== undefined) searchParams.set('is_verified', String(params.is_verified));
     if (params?.is_premium !== undefined) searchParams.set('is_premium', String(params.is_premium));
@@ -2218,125 +2081,6 @@ export interface AvailableAgent {
   key_themes: string[] | null;
 }
 
-// ========== Organization Types ==========
-
-export interface Organization {
-  id: string;
-  name: string;
-  slug: string;
-  description: string | null;
-  logo_url: string | null;
-  owner_id: string;
-  tier: string;
-  max_members: number;
-  max_projects: number;
-  max_simulations_per_month: number;
-  current_month_simulations: number;
-  is_active: boolean;
-  created_at: string;
-  updated_at: string;
-  member_count?: number;
-}
-
-export interface OrganizationCreate {
-  name: string;
-  slug?: string;
-  description?: string;
-}
-
-export interface OrganizationUpdate {
-  name?: string;
-  description?: string;
-  logo_url?: string;
-  settings?: Record<string, unknown>;
-}
-
-export interface MemberInfo {
-  id: string;
-  email: string;
-  full_name: string | null;
-  role: string;
-  joined_at: string;
-}
-
-export interface OrganizationDetail extends Organization {
-  members: MemberInfo[];
-}
-
-export interface UserOrganization {
-  organization: Organization;
-  role: string;
-  joined_at: string;
-}
-
-export interface InvitationCreate {
-  email: string;
-  role?: string;
-}
-
-export interface Invitation {
-  id: string;
-  organization_id: string;
-  organization_name: string | null;
-  email: string;
-  role: string;
-  invited_by_email: string | null;
-  status: string;
-  created_at: string;
-  expires_at: string;
-}
-
-export interface AuditLog {
-  id: string;
-  organization_id: string;
-  user_id: string | null;
-  user_email: string | null;
-  action: string;
-  resource_type: string | null;
-  resource_id: string | null;
-  details: Record<string, unknown>;
-  ip_address: string | null;
-  created_at: string;
-}
-
-export interface OrganizationStats {
-  total_members: number;
-  total_projects: number;
-  total_simulations: number;
-  simulations_this_month: number;
-  simulations_remaining: number;
-  storage_used_mb: number;
-  // Aliases for convenience
-  member_count?: number;
-  project_count?: number;
-  simulation_count?: number;
-}
-
-export type OrganizationRole = 'owner' | 'admin' | 'member' | 'viewer';
-
-export type AuditAction =
-  | 'org_created'
-  | 'org_updated'
-  | 'org_deleted'
-  | 'member_invited'
-  | 'member_joined'
-  | 'member_removed'
-  | 'member_role_changed'
-  | 'project_created'
-  | 'project_shared'
-  | 'project_unshared'
-  | 'simulation_run'
-  | 'simulation_completed'
-  | 'settings_updated'
-  | 'api_key_generated';
-
-export interface OrganizationDashboard {
-  organization: Organization;
-  stats: OrganizationStats;
-  recent_activity: AuditLog[];
-  pending_invitations: number;
-}
-
 // ========== Marketplace Types ==========
 
 export interface MarketplaceCategory {
@@ -2405,8 +2149,6 @@ export interface MarketplaceTemplateListItem {
 
 export interface MarketplaceTemplateDetail extends MarketplaceTemplateListItem {
   description: string | null;
-  organization_id: string | null;
-  organization_name: string | null;
   context: string;
   questions: Array<Record<string, unknown>>;
   variables: Record<string, unknown>;
@@ -2442,7 +2184,6 @@ export interface MarketplaceTemplateCreate {
   methodology?: Record<string, unknown>;
   preview_image_url?: string;
   sample_results?: Record<string, unknown>;
-  organization_id?: string;
   source_scenario_id?: string;
   is_premium?: boolean;
   price_usd?: number;
@@ -2455,7 +2196,6 @@ export interface MarketplaceTemplateFromScenario {
   short_description?: string;
   category_id?: string;
   tags?: string[];
-  organization_id?: string;
   is_premium?: boolean;
   price_usd?: number;
 }

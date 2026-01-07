@@ -26,9 +26,7 @@ src/
 │   ├── dashboard/         # Protected dashboard routes
 │   │   ├── accuracy/      # Accuracy benchmarking
 │   │   ├── guide/         # User guide
-│   │   ├── invitations/   # Organization invitations
 │   │   ├── marketplace/   # Persona template marketplace
-│   │   ├── organizations/ # Organization management
 │   │   ├── personas/      # Persona creation and management
 │   │   ├── products/      # Product testing simulations
 │   │   ├── projects/      # Project management
@@ -41,7 +39,6 @@ src/
 │   ├── dashboard/        # Dashboard layout components
 │   ├── focus-group/      # Focus group interview components
 │   ├── marketplace/      # Marketplace components
-│   ├── organization/     # Organization management components
 │   ├── providers/        # Context providers
 │   ├── simulation/       # Simulation progress components
 │   ├── ui/               # Base UI components (Radix-based)
@@ -236,3 +233,31 @@ The application runs in Docker with the following configuration:
 - Removed all console.log/error/warn statements (21 files)
 - Fixed `icon: any` type issues with LucideIcon type
 - Build passes with 0 TypeScript errors
+
+## QA Testing Protocol
+
+**Test Account Credentials** (use for every QA session):
+- Email: `claude-test@agentverse.io`
+- Password: `TestAgent2024!`
+- See `.test-credentials.json` for full config
+
+**Testing Workflow**:
+1. Always test on localhost:3002 FIRST
+2. Fix all issues locally before any deployment
+3. Test ALL dashboard pages, buttons, features
+4. Check browser console for errors
+5. Verify database connectivity
+6. Deploy to Vercel only after local tests pass
+7. Final production test after deployment
+
+**Dashboard Pages to Test**:
+- /dashboard (main overview)
+- /dashboard/personas
+- /dashboard/simulations
+- /dashboard/results
+- /dashboard/products
+- /dashboard/projects
+- /dashboard/marketplace
+- /dashboard/accuracy
+- /dashboard/settings
+- /dashboard/guide
