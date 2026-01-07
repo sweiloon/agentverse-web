@@ -391,9 +391,9 @@ export default function LoginPage() {
           {/* Bottom text */}
           <p className="text-center text-[10px] font-mono text-white/20 mt-6">
             By signing in, you agree to our{' '}
-            <Link href="/terms" className="text-cyan-500/60 hover:text-cyan-400">Terms</Link>
+            <a href="#" className="text-cyan-500/60 hover:text-cyan-400">Terms</a>
             {' '}and{' '}
-            <Link href="/privacy" className="text-cyan-500/60 hover:text-cyan-400">Privacy Policy</Link>
+            <a href="#" className="text-cyan-500/60 hover:text-cyan-400">Privacy Policy</a>
           </p>
         </div>
       </main>

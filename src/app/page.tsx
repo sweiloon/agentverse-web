@@ -516,9 +516,9 @@ export default function HomePage() {
             </div>
 
             <div className="flex items-center gap-6 text-xs font-mono text-white/40">
-              <Link href="/privacy" className="hover:text-cyan-400 transition-colors">Privacy</Link>
-              <Link href="/terms" className="hover:text-cyan-400 transition-colors">Terms</Link>
-              <Link href="/docs" className="hover:text-cyan-400 transition-colors">Documentation</Link>
+              <a href="#" className="hover:text-cyan-400 transition-colors">Privacy</a>
+              <a href="#" className="hover:text-cyan-400 transition-colors">Terms</a>
+              <Link href="/dashboard/guide" className="hover:text-cyan-400 transition-colors">Documentation</Link>
             </div>
 
             <div className="flex items-center gap-2 text-xs font-mono text-white/30">

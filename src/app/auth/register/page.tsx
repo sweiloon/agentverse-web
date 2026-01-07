@@ -548,13 +548,13 @@ export default function RegisterPage() {
                   </div>
                   <span className="text-xs font-mono text-white/40 group-hover:text-white/60 transition-colors leading-relaxed">
                     I accept the{' '}
-                    <Link href="/terms" className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2">
+                    <a href="#" className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2">
                       Terms of Service
-                    </Link>{' '}
+                    </a>{' '}
                     and{' '}
-                    <Link href="/privacy" className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2">
+                    <a href="#" className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2">
                       Privacy Protocol
-                    </Link>
+                    </a>
                   </span>
                 </label>
               </div>
