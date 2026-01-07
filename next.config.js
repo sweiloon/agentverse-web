@@ -13,6 +13,18 @@ const nextConfig = {
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000',
     NEXT_PUBLIC_APP_NAME: 'AgentVerse',
   },
+  async rewrites() {
+    // Get the backend URL from environment, defaulting to localhost for development
+    const backendUrl = process.env.BACKEND_API_URL || 'http://72.60.199.100:8001';
+
+    return [
+      {
+        // Proxy all /api/v1/* requests to the backend
+        source: '/api/v1/:path*',
+        destination: `${backendUrl}/api/v1/:path*`,
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;

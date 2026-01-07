@@ -2,7 +2,8 @@ import type { NextAuthOptions, User } from 'next-auth';
 import type { JWT } from 'next-auth/jwt';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+// Use BACKEND_API_URL for server-side auth calls (not exposed to client)
+const API_URL = process.env.BACKEND_API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
 // Extended user type for authentication
 interface AuthUser extends User {

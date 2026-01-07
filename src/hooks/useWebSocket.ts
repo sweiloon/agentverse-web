@@ -118,8 +118,17 @@ export function useWebSocket(options: UseWebSocketOptions = {}): UseWebSocketRet
 
   // Get WebSocket URL
   const getWsUrl = useCallback(() => {
+    // Use dedicated WS URL if available, otherwise extract from API URL
+    const wsUrl = process.env.NEXT_PUBLIC_WS_URL;
+    if (wsUrl) {
+      const path = runId ? `/ws/${runId}` : '/ws';
+      return `${wsUrl}${path}`;
+    }
+
+    // Fallback: extract host from API URL or use localhost
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+    const host = apiUrl?.replace(/^https?:\/\//, '') || 'localhost:8000';
     const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    const host = process.env.NEXT_PUBLIC_API_URL?.replace(/^https?:\/\//, '') || 'localhost:8000';
     const path = runId ? `/ws/${runId}` : '/ws';
     return `${protocol}//${host}${path}`;
   }, [runId]);

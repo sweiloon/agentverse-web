@@ -179,9 +179,16 @@ function CyberCard({
 
 // Stat counter animation
 function StatCounter({ value, suffix = '', label }: { value: number; suffix?: string; label: string }) {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(value); // Start with final value for SSR
+  const [hasAnimated, setHasAnimated] = useState(false);
 
   useEffect(() => {
+    // Only animate once on first mount
+    if (hasAnimated) return;
+
+    setCount(0); // Reset to 0 for animation
+    setHasAnimated(true);
+
     const duration = 2000;
     const steps = 60;
     const increment = value / steps;
@@ -198,7 +205,7 @@ function StatCounter({ value, suffix = '', label }: { value: number; suffix?: st
     }, duration / steps);
 
     return () => clearInterval(timer);
-  }, [value]);
+  }, [value, hasAnimated]);
 
   return (
     <div className="text-center">
