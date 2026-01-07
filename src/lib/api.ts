@@ -324,12 +324,12 @@ class ApiClient {
   }
 
   // Health check - returns true if API is available
-  // Uses relative URL to go through Next.js rewrites (avoids Mixed Content)
+  // Always uses relative URL to go through Next.js rewrites (avoids Mixed Content on HTTPS)
   async checkHealth(): Promise<{ healthy: boolean; version?: string; error?: string }> {
     try {
-      // Use relative path to go through Next.js rewrites
-      const healthUrl = this.baseUrl ? `${this.baseUrl}/health` : '/api/health';
-      const response = await fetch(healthUrl, {
+      // Always use relative path to go through Next.js rewrites
+      // This avoids Mixed Content errors when site is served over HTTPS
+      const response = await fetch('/api/health', {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
       });
