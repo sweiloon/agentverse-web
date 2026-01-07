@@ -394,9 +394,9 @@ export default function ForgotPasswordPage() {
           {/* Bottom text */}
           <p className="text-center text-[10px] font-mono text-white/20 mt-6">
             Need help?{' '}
-            <Link href="/support" className="text-cyan-500/60 hover:text-cyan-400">
+            <a href="#" className="text-cyan-500/60 hover:text-cyan-400">
               Contact Support
-            </Link>
+            </a>
           </p>
         </div>
       </main>
