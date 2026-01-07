@@ -7,14 +7,6 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 // ============= Types =============
 
-export interface WebSocketMessage {
-  type: string;
-  data?: Record<string, unknown>;
-  run_id?: string;
-  error?: string;
-  message?: string;
-}
-
 export interface ProgressData {
   run_id: string;
   progress: number;
@@ -45,6 +37,14 @@ export interface RunCompleteData {
 export interface RunFailedData {
   run_id: string;
   error: string;
+}
+
+export interface WebSocketMessage {
+  type: string;
+  data?: ProgressData | AgentCompleteData | RunCompleteData | RunFailedData | Record<string, unknown>;
+  run_id?: string;
+  error?: string;
+  message?: string;
 }
 
 export type ConnectionStatus = 'connecting' | 'connected' | 'disconnected' | 'error';
@@ -147,21 +147,29 @@ export function useWebSocket(options: UseWebSocketOptions = {}): UseWebSocketRet
 
       switch (message.type) {
         case 'progress':
-          const progressData = message.data as unknown as ProgressData;
-          setProgress(progressData);
-          onProgress?.(progressData);
+          if (message.data) {
+            const progressData = message.data as ProgressData;
+            setProgress(progressData);
+            onProgress?.(progressData);
+          }
           break;
 
         case 'agent_complete':
-          onAgentComplete?.(message.data as unknown as AgentCompleteData);
+          if (message.data) {
+            onAgentComplete?.(message.data as AgentCompleteData);
+          }
           break;
 
         case 'run_complete':
-          onRunComplete?.(message.data as unknown as RunCompleteData);
+          if (message.data) {
+            onRunComplete?.(message.data as RunCompleteData);
+          }
           break;
 
         case 'run_failed':
-          onRunFailed?.(message.data as unknown as RunFailedData);
+          if (message.data) {
+            onRunFailed?.(message.data as RunFailedData);
+          }
           break;
 
         case 'subscribed':

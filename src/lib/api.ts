@@ -227,6 +227,10 @@ class ApiClient {
     this.accessToken = token;
   }
 
+  getAccessToken(): string | null {
+    return this.accessToken;
+  }
+
   // Generate cache key for request deduplication
   private getRequestKey(endpoint: string, options: RequestInit = {}): string {
     return `${options.method || 'GET'}:${endpoint}:${options.body || ''}`;

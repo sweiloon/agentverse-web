@@ -4,11 +4,6 @@
   "buildCommand": "npm run build",
   "framework": "nextjs",
   "regions": ["sin1"],
-  "env": {
-    "NEXT_PUBLIC_API_URL": "",
-    "NEXT_PUBLIC_WS_URL": "ws://72.60.199.100:8001",
-    "BACKEND_API_URL": "http://72.60.199.100:8001"
-  },
   "headers": [
     {
       "source": "/(.*)",
@@ -24,6 +19,18 @@
         {
           "key": "X-XSS-Protection",
           "value": "1; mode=block"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=31536000; includeSubDomains"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
         }
       ]
     }

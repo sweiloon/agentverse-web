@@ -130,7 +130,7 @@ export function useStreamingInterview(sessionId: string | null) {
     abortControllerRef.current = new AbortController();
 
     try {
-      const token = localStorage.getItem('access_token');
+      const token = api.getAccessToken();
       const response = await fetch(api.getStreamInterviewUrl(sessionId), {
         method: 'POST',
         headers: {

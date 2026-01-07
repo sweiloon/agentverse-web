@@ -39,15 +39,26 @@ import api, {
   GenerateAIContentRequest,
 } from '@/lib/api';
 
+// Extended session user type for type safety
+interface ExtendedSessionUser {
+  id?: string;
+  name?: string | null;
+  email?: string | null;
+  image?: string | null;
+  accessToken?: string;
+  role?: string;
+  tier?: string;
+}
+
 // Set up API token from session
 export function useApiAuth() {
   const { data: session, status } = useSession();
 
   useEffect(() => {
     if (session?.user) {
-      const accessToken = (session.user as any).accessToken;
-      if (accessToken) {
-        api.setAccessToken(accessToken);
+      const user = session.user as ExtendedSessionUser;
+      if (user.accessToken) {
+        api.setAccessToken(user.accessToken);
       }
     } else {
       api.setAccessToken(null);
@@ -1098,7 +1109,6 @@ export function useMarketplaceTemplates(params?: {
   scenario_type?: string;
   tags?: string;
   author_id?: string;
-  organization_id?: string;
   is_featured?: boolean;
   is_verified?: boolean;
   is_premium?: boolean;

@@ -93,11 +93,20 @@ src/
 
 ## Environment Variables
 
+### Local Development (`.env.local`)
 ```env
-NEXT_PUBLIC_API_URL=http://localhost:8000  # FastAPI backend URL
+NEXT_PUBLIC_API_URL=http://localhost:8000  # FastAPI backend URL (empty for production proxy)
 NEXTAUTH_URL=http://localhost:3002         # NextAuth URL
-NEXTAUTH_SECRET=                           # Required in production
+NEXTAUTH_SECRET=your-dev-secret            # Development secret
+BACKEND_API_URL=http://localhost:8000      # Backend URL for server-side calls
 ```
+
+### Production (Vercel Dashboard)
+Configure these in Vercel project settings (NOT in vercel.json):
+- `BACKEND_API_URL` - Production backend API URL
+- `NEXT_PUBLIC_WS_URL` - WebSocket URL for real-time updates
+- `NEXTAUTH_SECRET` - Strong production secret (use `openssl rand -base64 32`)
+- `NEXTAUTH_URL` - Production URL (e.g., https://your-domain.vercel.app)
 
 ## Development Commands
 
@@ -143,10 +152,17 @@ The application runs in Docker with the following configuration:
 
 ### Security
 
-- No hardcoded secrets
-- Environment variables for all sensitive data
+- No hardcoded secrets or IP addresses in code
+- Environment variables for all sensitive data (via Vercel dashboard)
 - NextAuth secret required in production
-- API tokens stored securely in JWT
+- API tokens stored securely in JWT (not localStorage)
+- Security headers configured in vercel.json:
+  - `X-Content-Type-Options: nosniff`
+  - `X-Frame-Options: DENY`
+  - `X-XSS-Protection: 1; mode=block`
+  - `Strict-Transport-Security: max-age=31536000; includeSubDomains`
+  - `Referrer-Policy: strict-origin-when-cross-origin`
+  - `Permissions-Policy: camera=(), microphone=(), geolocation=()`
 
 ### React Best Practices
 
@@ -228,11 +244,27 @@ The application runs in Docker with the following configuration:
 
 ## Recent QA Fixes (2026-01-08)
 
+### Security & Configuration
+- Removed hardcoded backend IP addresses from all config files
+- Added HSTS, Referrer-Policy, and Permissions-Policy security headers
+- Fixed localStorage token storage - now uses session-based token management
+- Moved sensitive environment variables to Vercel dashboard (not in vercel.json)
+- Added `.test-credentials.json` to `.gitignore`
+
+### Code Quality & Type Safety
 - Fixed type safety issues in auth.ts with proper interfaces
-- Removed hardcoded fallback secret (security fix)
+- Removed all `as any` type casts in useApi.ts (uses proper ExtendedSessionUser interface)
+- Fixed double type casts (`as unknown as X`) in useWebSocket.ts with proper union types
+- Removed remaining organization_id reference from marketplace hooks
+- Added getAccessToken() method to API client for secure token access
 - Removed all console.log/error/warn statements (21 files)
 - Fixed `icon: any` type issues with LucideIcon type
 - Build passes with 0 TypeScript errors
+
+### Feature Removal
+- Removed Organizations and Invitations feature (Team section)
+- Deleted 7 page files, 6 component files
+- Removed ~200 lines of API methods and types
 
 ## QA Testing Protocol
 
