@@ -127,7 +127,7 @@ export default function OrganizationSettingsPage() {
         </button>
         <h1 className="text-2xl font-mono font-bold">ORGANIZATION SETTINGS</h1>
         <p className="text-white/60 text-sm font-mono mt-1">
-          Manage your organization's settings and preferences
+          Manage your organization&apos;s settings and preferences
         </p>
       </div>
 
@@ -264,7 +264,7 @@ export default function OrganizationSettingsPage() {
                 <AlertTriangle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="font-mono text-sm text-red-400">
-                    This will permanently delete the organization "{org.name}" and all associated data.
+                    This will permanently delete the organization &quot;{org.name}&quot; and all associated data.
                   </p>
                   <p className="text-xs text-white/60 font-mono mt-2">
                     Type <strong>{org.name}</strong> to confirm:

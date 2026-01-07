@@ -429,7 +429,7 @@ export default function SettingsPage() {
                     ) : (
                       <div className="space-y-3">
                         <p className="text-[10px] font-mono text-red-400">
-                          Type "DELETE" to confirm:
+                          Type &quot;DELETE&quot; to confirm:
                         </p>
                         <input
                           type="text"

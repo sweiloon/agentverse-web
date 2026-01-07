@@ -196,7 +196,7 @@ export default function ProductResultPage() {
       <div className="flex flex-col items-center justify-center min-h-screen bg-black">
         <AlertTriangle className="w-8 h-8 text-red-400 mb-4" />
         <h2 className="text-sm font-mono font-bold text-white mb-2">RESULT NOT FOUND</h2>
-        <p className="text-xs font-mono text-white/40 mb-4">The result you're looking for doesn't exist.</p>
+        <p className="text-xs font-mono text-white/40 mb-4">The result you&apos;re looking for doesn&apos;t exist.</p>
         <Link href={`/dashboard/products/${productId}`}>
           <Button variant="outline" className="font-mono text-xs border-white/20 text-white/60 hover:bg-white/5">
             <ArrowLeft className="w-3 h-3 mr-2" />
@@ -604,7 +604,7 @@ export default function ProductResultPage() {
               <div className="space-y-2">
                 {simulationOutcomes.key_quotes.slice(0, 5).map((quote, index) => (
                   <div key={index} className="bg-white/5 border-l-2 border-white/40 p-3">
-                    <p className="text-xs font-mono text-white/60 italic">"{quote}"</p>
+                    <p className="text-xs font-mono text-white/60 italic">&quot;{quote}&quot;</p>
                   </div>
                 ))}
               </div>

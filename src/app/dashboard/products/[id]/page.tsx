@@ -73,7 +73,7 @@ export default function ProductDetailPage() {
       <div className="flex flex-col items-center justify-center min-h-screen bg-black">
         <AlertTriangle className="w-8 h-8 text-red-400 mb-4" />
         <h2 className="text-lg font-mono font-bold text-white mb-2">Product Not Found</h2>
-        <p className="text-sm font-mono text-white/50 mb-4">The product you're looking for doesn't exist.</p>
+        <p className="text-sm font-mono text-white/50 mb-4">The product you&apos;re looking for doesn&apos;t exist.</p>
         <Link href="/dashboard/products">
           <Button variant="outline" className="font-mono text-xs border-white/20 text-white/60 hover:bg-white/5">
             <ArrowLeft className="w-3 h-3 mr-2" />

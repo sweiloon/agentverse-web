@@ -57,7 +57,7 @@ export default function InvitationsPage() {
           <Mail className="w-12 h-12 text-white/20 mx-auto mb-4" />
           <h3 className="font-mono font-bold mb-2">No Pending Invitations</h3>
           <p className="text-white/40 text-sm font-mono mb-6 max-w-md mx-auto">
-            You don't have any pending invitations. When someone invites you to their organization, it will appear here.
+            You don&apos;t have any pending invitations. When someone invites you to their organization, it will appear here.
           </p>
           <button
             onClick={() => router.push('/dashboard/organizations')}

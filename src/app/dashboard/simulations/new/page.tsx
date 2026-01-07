@@ -339,7 +339,7 @@ export default function NewSimulationPage() {
               {selectedPersonaTemplate && (
                 <p className="text-[10px] font-mono text-white/30 mt-2">
                   <Sparkles className="w-3 h-3 inline mr-1" />
-                  Using {selectedPersonaTemplate.persona_count || 0} pre-defined personas from "{selectedPersonaTemplate.name}"
+                  Using {selectedPersonaTemplate.persona_count || 0} pre-defined personas from &quot;{selectedPersonaTemplate.name}&quot;
                 </p>
               )}
             </div>

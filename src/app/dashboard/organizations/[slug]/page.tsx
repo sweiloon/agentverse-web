@@ -58,7 +58,7 @@ export default function OrganizationDetailPage() {
         <div className="text-center py-20">
           <h2 className="text-xl font-mono font-bold mb-2">Organization Not Found</h2>
           <p className="text-white/60 font-mono">
-            The organization you're looking for doesn't exist or you don't have access.
+            The organization you&apos;re looking for doesn&apos;t exist or you don&apos;t have access.
           </p>
           <button
             onClick={() => router.push('/dashboard/organizations')}

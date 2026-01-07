@@ -49,7 +49,7 @@ export default function FocusGroupPage() {
       <div className="flex flex-col items-center justify-center min-h-screen bg-black">
         <AlertTriangle className="w-8 h-8 text-red-400 mb-4" />
         <h2 className="text-lg font-mono font-bold text-white mb-2">Product Not Found</h2>
-        <p className="text-sm font-mono text-white/50 mb-4">The product you're looking for doesn't exist.</p>
+        <p className="text-sm font-mono text-white/50 mb-4">The product you&apos;re looking for doesn&apos;t exist.</p>
         <Link
           href="/dashboard/products"
           className="px-4 py-2 text-xs font-mono bg-white/10 text-white/60 hover:bg-white/20 transition-colors flex items-center gap-2"

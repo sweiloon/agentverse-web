@@ -177,40 +177,12 @@ function CyberCard({
   );
 }
 
-// Stat counter animation
+// Stat counter - displays final value immediately (no animation to avoid SSR hydration issues)
 function StatCounter({ value, suffix = '', label }: { value: number; suffix?: string; label: string }) {
-  const [count, setCount] = useState(value); // Start with final value for SSR
-  const [hasAnimated, setHasAnimated] = useState(false);
-
-  useEffect(() => {
-    // Only animate once on first mount
-    if (hasAnimated) return;
-
-    setCount(0); // Reset to 0 for animation
-    setHasAnimated(true);
-
-    const duration = 2000;
-    const steps = 60;
-    const increment = value / steps;
-    let current = 0;
-
-    const timer = setInterval(() => {
-      current += increment;
-      if (current >= value) {
-        setCount(value);
-        clearInterval(timer);
-      } else {
-        setCount(Math.floor(current));
-      }
-    }, duration / steps);
-
-    return () => clearInterval(timer);
-  }, [value, hasAnimated]);
-
   return (
     <div className="text-center">
-      <div className="text-4xl md:text-5xl font-mono font-bold text-cyan-400 mb-2">
-        {count.toLocaleString()}{suffix}
+      <div className="text-4xl md:text-5xl font-mono font-bold text-cyan-400 mb-2 animate-pulse">
+        {value.toLocaleString()}{suffix}
       </div>
       <div className="text-xs font-mono text-white/40 uppercase tracking-wider">{label}</div>
     </div>
@@ -473,12 +445,12 @@ export default function HomePage() {
                   [INFO] Generating 1000 unique agent personas...<br />
                   <span className="text-green-400">[SUCCESS]</span> Agents ready. Starting simulation...
                 </div>
-                <div className="text-cyan-400 mb-2">$ agentverse run --scenario "product-launch"</div>
+                <div className="text-cyan-400 mb-2">$ agentverse run --scenario &quot;product-launch&quot;</div>
                 <div className="text-white/60">
                   [RUNNING] Simulating customer responses...<br />
-                  [AGENT-001] "I would definitely try this product..."<br />
-                  [AGENT-002] "The price point seems reasonable..."<br />
-                  [AGENT-003] "I prefer the competitor's option..."<br />
+                  [AGENT-001] &quot;I would definitely try this product...&quot;<br />
+                  [AGENT-002] &quot;The price point seems reasonable...&quot;<br />
+                  [AGENT-003] &quot;I prefer the competitor&apos;s option...&quot;<br />
                   <span className="text-cyan-400">[PROGRESS]</span> 847/1000 agents processed...
                 </div>
                 <div className="mt-4 flex items-center gap-2">

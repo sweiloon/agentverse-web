@@ -255,7 +255,7 @@ export function ViWorld({ templateId }: ViWorldProps) {
           <Users className="w-12 h-12 text-slate-600 mx-auto mb-4" />
           <h2 className="text-xl font-bold text-white mb-2">No Personas Found</h2>
           <p className="text-slate-400 mb-4">
-            This template doesn't have any persona records yet. Generate some personas first to see them in Vi World.
+            This template doesn&apos;t have any persona records yet. Generate some personas first to see them in Vi World.
           </p>
           <button
             onClick={handleBack}
