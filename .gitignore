@@ -33,3 +33,5 @@ npm-debug.log*
 # Testing
 coverage/
 .nyc_output/
+.vercel
+.env*.local
