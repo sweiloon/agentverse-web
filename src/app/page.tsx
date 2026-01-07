@@ -231,16 +231,27 @@ export default function HomePage() {
           </Link>
 
           <nav className="hidden md:flex items-center gap-8">
-            {['Features', 'Pricing', 'Docs'].map((item) => (
-              <Link
-                key={item}
-                href={`/${item.toLowerCase()}`}
-                className="text-sm font-mono text-white/60 hover:text-cyan-400 transition-colors relative group"
-              >
-                {item.toUpperCase()}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-cyan-400 group-hover:w-full transition-all duration-300" />
-              </Link>
-            ))}
+            <a
+              href="#features"
+              className="text-sm font-mono text-white/60 hover:text-cyan-400 transition-colors relative group"
+            >
+              FEATURES
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-cyan-400 group-hover:w-full transition-all duration-300" />
+            </a>
+            <a
+              href="#demo"
+              className="text-sm font-mono text-white/60 hover:text-cyan-400 transition-colors relative group"
+            >
+              DEMO
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-cyan-400 group-hover:w-full transition-all duration-300" />
+            </a>
+            <Link
+              href="/dashboard/guide"
+              className="text-sm font-mono text-white/60 hover:text-cyan-400 transition-colors relative group"
+            >
+              DOCS
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-cyan-400 group-hover:w-full transition-all duration-300" />
+            </Link>
           </nav>
 
           <div className="flex items-center gap-4">
@@ -313,7 +324,7 @@ export default function HomePage() {
                 START SIMULATION
               </Button>
             </Link>
-            <Link href="/demo">
+            <a href="#demo">
               <Button
                 size="lg"
                 variant="outline"
@@ -326,7 +337,7 @@ export default function HomePage() {
                 <Terminal className="mr-2 w-5 h-5" />
                 WATCH DEMO
               </Button>
-            </Link>
+            </a>
           </div>
 
           {/* Scroll indicator */}
@@ -365,7 +376,7 @@ export default function HomePage() {
       </section>
 
       {/* Features Section */}
-      <section className="relative py-24" style={{ zIndex: 10 }}>
+      <section id="features" className="relative py-24" style={{ zIndex: 10 }}>
         <div className="container mx-auto px-4">
           {/* Section header */}
           <div className="text-center mb-16">
@@ -424,7 +435,7 @@ export default function HomePage() {
       </section>
 
       {/* Terminal Demo Section */}
-      <section className="relative py-24 border-y border-cyan-500/20" style={{ zIndex: 10 }}>
+      <section id="demo" className="relative py-24 border-y border-cyan-500/20" style={{ zIndex: 10 }}>
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="bg-black/80 border border-cyan-500/30 rounded-none overflow-hidden">

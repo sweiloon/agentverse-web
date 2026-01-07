@@ -2,7 +2,10 @@
  * API Client for AgentVerse Backend
  */
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+// Use empty string for relative URLs (production), fallback to localhost only if undefined
+const API_URL = process.env.NEXT_PUBLIC_API_URL !== undefined
+  ? process.env.NEXT_PUBLIC_API_URL
+  : 'http://localhost:8000';
 
 export interface ApiError {
   detail: string;
@@ -321,9 +324,12 @@ class ApiClient {
   }
 
   // Health check - returns true if API is available
+  // Uses relative URL to go through Next.js rewrites (avoids Mixed Content)
   async checkHealth(): Promise<{ healthy: boolean; version?: string; error?: string }> {
     try {
-      const response = await fetch(`${this.baseUrl}/health`, {
+      // Use relative path to go through Next.js rewrites
+      const healthUrl = this.baseUrl ? `${this.baseUrl}/health` : '/api/health';
+      const response = await fetch(healthUrl, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
       });
